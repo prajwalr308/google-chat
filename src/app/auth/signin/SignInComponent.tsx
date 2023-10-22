@@ -11,7 +11,7 @@ const SignInComponent = ({ providers }: Props) => {
       {Object.values(providers!).map((provider) => (
         <div key={provider.name}>
           <button
-            className="p-3 bg-blue-500 hover:bg-blue-700 rounded text-white font-bold"
+            className="p-3 bg-green-500 hover:bg-green-700 rounded text-white font-bold"
             onClick={() =>
               signIn(provider.id, {
                 callbackUrl: process.env.VERCEL_URL || "http://localhost:3000",

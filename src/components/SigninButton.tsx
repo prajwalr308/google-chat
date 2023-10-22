@@ -8,7 +8,7 @@ function SigninButton({
   clickHandler: React.MouseEventHandler<HTMLButtonElement>;
 }) {
   return (
-    <button onClick={clickHandler} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    <button onClick={clickHandler} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
       Signin
     </button>
   );
