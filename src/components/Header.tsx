@@ -46,7 +46,7 @@ function Header() {
         </div>
         <SigninButton
           clickHandler={() => {
-            signIn("facebook");
+            signIn("google");
             console.log("signin");
           }}
         />
