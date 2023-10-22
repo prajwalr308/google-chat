@@ -18,7 +18,7 @@ function Header() {
           <Image
             className="rounded-full mx-2 object-contain"
             src={session?.user?.image || "/logo.png"}
-            alt="Meta logo"
+            alt="user logo"
             width={72}
             height={12}
           />
@@ -42,7 +42,7 @@ function Header() {
       <div className="flex flex-col items-center space-y-5">
         <div className="flex space-x-2 items-center">
           <Image src="/logo.png" alt="Meta logo" width={72} height={12} />
-          <p className="text-blue-400 font-bold">Welcome to meta messenger</p>
+          <p className="text-blue-400 font-bold">Welcome to google chat</p>
         </div>
         <SigninButton
           clickHandler={() => {
