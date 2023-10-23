@@ -45,8 +45,8 @@ const ChatInput = () => {
       // mutate(messages);
       return [...messages!, data.message];
     };
-    
-    await mutate('/api/getMessages', uploadMessagetoUpstash,false);
+
+    await mutate("/api/getMessages", uploadMessagetoUpstash, false);
     // revalidateTag("messages");
   };
 
