@@ -44,10 +44,11 @@ const ChatInput = () => {
       );
       return [...messages!, data.message];
     };
-    await mutate(uploadMessagetoUpstash, {
-      optimisticData: [...messages!, messageObj],
-      rollbackOnError: true,
-    });
+    mutate(uploadMessagetoUpstash, false);
+    // await mutate(uploadMessagetoUpstash, {
+    //   optimisticData: [...messages!, messageObj],
+    //   rollbackOnError: true,
+    // });
     // revalidateTag("messages");
   };
 
