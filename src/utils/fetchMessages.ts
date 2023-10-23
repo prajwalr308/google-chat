@@ -1,5 +1,5 @@
 import { Message } from "../../typing";
-
+export const dynamic = "force-dynamic";
 export const fetcher = async () => {
   const res = await fetch("/api/getMessages",{
     cache: 'no-store'

@@ -1,7 +1,7 @@
 import redis from "../../../../redis";
 import { Message } from "../../../../typing";
 import { NextRequest, NextResponse } from "next/server";
-
+export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   if (req.method !== "GET") {
     return new NextResponse(
