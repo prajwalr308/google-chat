@@ -41,6 +41,7 @@ const ChatInput = () => {
     mutate(messageObj, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["/api/getMessages"] });
+        queryClient.refetchQueries({ queryKey: ["/api/getMessages"] });
       },
     });
 
