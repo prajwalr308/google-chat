@@ -3,7 +3,7 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
 import { Message } from "../../typing";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { fetcher } from "@/utils/fetchMessages";
 import { useSession } from "next-auth/react";
 import { revalidateTag } from "next/cache";
@@ -11,7 +11,8 @@ import { revalidateTag } from "next/cache";
 const ChatInput = () => {
   const { data: session } = useSession();
   const [message, setMessage] = React.useState("");
-  const { data: messages, error, mutate } = useSWR("/api/getMessages", fetcher);
+  const { data: messages, error } = useSWR("/api/getMessages", fetcher);
+  const { mutate } = useSWRConfig()
   console.log("🚀 ~ file: ChatInput.tsx:12 ~ ChatInput ~ data", messages);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,7 +43,7 @@ const ChatInput = () => {
         "🚀 ~ file: ChatInput.tsx:33 ~ uploadMessagetoUpstah ~ data:",
         data
       );
-      mutate(fetcher);
+      mutate('/api/getMessages');
       return [...messages!, data.message];
     };
     await uploadMessagetoUpstash();
