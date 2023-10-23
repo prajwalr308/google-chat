@@ -10,10 +10,7 @@ type Props = {
 };
 const MessageList = ({ initialMessages }: Props) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const { data: messages, error } = useSWR("/api/getMessages", fetcher, {
-    revalidateOnFocus: true,
-    revalidateOnReconnect: true,
-  });
+  const { data: messages, error } = useSWR("/api/getMessages", fetcher);
   console.log("🚀 ~ file: MessageList.tsx:37 ~ MessageList ~ data", messages);
 
   useEffect(() => {
