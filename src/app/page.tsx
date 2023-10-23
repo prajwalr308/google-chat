@@ -16,7 +16,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 import React from "react";
 // import Loading from "@/components/loading";
-
+export const dynamic = "force-dynamic";
 export default function Home() {
   const [client] = React.useState(new QueryClient());
   //server side
