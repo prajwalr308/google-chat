@@ -1,6 +1,6 @@
 "use client";
 import { fetcher } from "@/utils/fetchMessages";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import useSWR from "swr";
 import MessageComponent from "./MessageComponent";
 import { clientPusher } from "../../pusher";
@@ -9,8 +9,15 @@ type Props = {
   initialMessages: Message[];
 };
 const MessageList = ({ initialMessages }: Props) => {
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const { data: messages, error, mutate } = useSWR("/api/getMessages", fetcher);
   console.log("🚀 ~ file: MessageList.tsx:37 ~ MessageList ~ data", messages);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, initialMessages]);
   useEffect(() => {
     const channel = clientPusher.subscribe("messages");
     channel.bind("new-message", (message: Message) => {
@@ -31,6 +38,7 @@ const MessageList = ({ initialMessages }: Props) => {
       {(messages || initialMessages).map((message) => (
         <MessageComponent key={message.id} message={message} />
       ))}
+      <div ref={messagesEndRef} />
     </div>
   );
 };
