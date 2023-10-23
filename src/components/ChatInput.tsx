@@ -46,7 +46,10 @@ const ChatInput = () => {
       return [...messages!, data.message];
     };
     
-    await mutate('/api/getMessages', uploadMessagetoUpstash, false);
+    await mutate('/api/getMessages', uploadMessagetoUpstash, {
+      optimisticData: [...messages!, messageObj],
+      
+    });
     // revalidateTag("messages");
   };
 

@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { Message } from "../../typing";
 import Image from "next/image";
