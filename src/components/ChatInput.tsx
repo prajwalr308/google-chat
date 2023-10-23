@@ -7,16 +7,19 @@ import { Message } from "../../typing";
 import { fetcher } from "@/utils/fetchMessages";
 import { useSession } from "next-auth/react";
 import { revalidateTag } from "next/cache";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { uploadMessagetoUpstash } from "@/utils/updateMessage";
 
 const ChatInput = () => {
   const { data: session } = useSession();
   const [message, setMessage] = React.useState("");
-  const queryClient= useQueryClient();
-  const { data: messages, error } = useQuery("/api/getMessages", fetcher);
+  const queryClient = useQueryClient();
+  const { data: messages, error } = useQuery({
+    queryKey: ["/api/getMessages"],
+    queryFn: () => fetcher(),
+  });
   //write mutation in react query
-  const { mutate } = useMutation(uploadMessagetoUpstash);
+  const { mutate } = useMutation({ mutationFn: uploadMessagetoUpstash });
 
   console.log("🚀 ~ file: ChatInput.tsx:12 ~ ChatInput ~ data", messages);
 
@@ -35,10 +38,10 @@ const ChatInput = () => {
       email: session?.user?.email!,
     };
 
-    mutate(messageObj,{
-      onSuccess:()=>{
-        queryClient.invalidateQueries("/api/getMessages");
-      }
+    mutate(messageObj, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["/api/getMessages"] });
+      },
     });
 
     // await mutate("/api/getMessages", uploadMessagetoUpstash, false);

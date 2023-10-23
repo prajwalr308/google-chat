@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query-devtools": "^5.0.5",
+    "@tanstack/react-query-next-experimental": "^5.0.5",
     "ioredis": "^5.3.2",
     "next": "^13.5.6",
     "next-auth": "^4.24.3",
