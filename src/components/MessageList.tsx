@@ -39,7 +39,9 @@ const MessageList = ({ initialMessages }: Props) => {
   return (
     <div className="space-y-5 px-5 pt-8 pb-32 ">
       {(messages || initialMessages).map((message) => (
-        <MessageComponent key={message.id} message={message} />
+        <div key={message.id}>
+          <MessageComponent message={message} />
+        </div>
       ))}
       <div ref={messagesEndRef} />
     </div>
