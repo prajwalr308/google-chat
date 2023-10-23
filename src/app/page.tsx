@@ -10,14 +10,14 @@ import { fetcher } from "@/utils/fetchMessages";
 
 export default async function Home() {
   //server side
-  // const data= await getData();
-  // const messages: Message[] = data.message || [];
+  const data= await getData();
+  const messages: Message[] = data.message || [];
 
   //client side
-  const { data, error } = useSWR("/api/getMessages", fetcher);
-  console.log(data);
+  // const { data, error } = useSWR("/api/getMessages", fetcher);
+  // console.log(data);
 
-  const messages: Message[] = data || [];
+  // const messages: Message[] = data || [];
 
   // if (!messages) return <Loading />;
   return (
