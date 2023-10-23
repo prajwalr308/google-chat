@@ -42,14 +42,15 @@ const ChatInput = () => {
         "🚀 ~ file: ChatInput.tsx:33 ~ uploadMessagetoUpstah ~ data:",
         data
       );
-      mutate(messages);
+      // mutate(messages);
       return [...messages!, data.message];
     };
-    await uploadMessagetoUpstash();
-    // await mutate(uploadMessagetoUpstash, {
-    //   optimisticData: [...messages!, messageObj],
-    //   rollbackOnError: true,
-    // });
+    
+    await mutate(uploadMessagetoUpstash, {
+      optimisticData: [...messages!, messageObj],
+      revalidate:true,
+      rollbackOnError: true,
+    });
     // revalidateTag("messages");
   };
 
