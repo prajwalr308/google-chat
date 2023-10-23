@@ -3,7 +3,7 @@ import { serverPusher } from "../../../../pusher";
 import redis from "../../../../redis";
 import { Message } from "../../../../typing";
 import { NextRequest, NextResponse } from "next/server";
-
+export const dynamic = "force-dynamic";
 export async function POST(req: NextRequest) {
   const myData = await req.json();
   if (req.method !== "POST") {
