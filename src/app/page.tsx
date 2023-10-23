@@ -11,6 +11,7 @@ export default async function Home() {
   //server side
   const data= await getData();
   const messages: Message[] = data.message || [];
+  console.log("messages in page tsx",messages);
 
   //client side
   // const { data, error } = useSWR("/api/getMessages", fetcher);
