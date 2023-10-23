@@ -3,15 +3,21 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
 import { Message } from "../../typing";
-import useSWR, { mutate } from "swr";
+
 import { fetcher } from "@/utils/fetchMessages";
 import { useSession } from "next-auth/react";
 import { revalidateTag } from "next/cache";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { uploadMessagetoUpstash } from "@/utils/updateMessage";
 
 const ChatInput = () => {
   const { data: session } = useSession();
   const [message, setMessage] = React.useState("");
-  const { data: messages, error } = useSWR("/api/getMessages", fetcher);
+  const queryClient= useQueryClient();
+  const { data: messages, error } = useQuery("/api/getMessages", fetcher);
+  //write mutation in react query
+  const { mutate } = useMutation(uploadMessagetoUpstash);
+
   console.log("🚀 ~ file: ChatInput.tsx:12 ~ ChatInput ~ data", messages);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,24 +35,13 @@ const ChatInput = () => {
       email: session?.user?.email!,
     };
 
-    const uploadMessagetoUpstash = async () => {
-      const response = await fetch("/api/addMessage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(messageObj),
-      });
-      const data = await response.json();
-      console.log(
-        "🚀 ~ file: ChatInput.tsx:33 ~ uploadMessagetoUpstah ~ data:",
-        data
-      );
-      // mutate(messages);
-      return [...messages!, data.message];
-    };
+    mutate(messageObj,{
+      onSuccess:()=>{
+        queryClient.invalidateQueries("/api/getMessages");
+      }
+    });
 
-    await mutate("/api/getMessages", uploadMessagetoUpstash, false);
+    // await mutate("/api/getMessages", uploadMessagetoUpstash, false);
     // revalidateTag("messages");
   };
 
