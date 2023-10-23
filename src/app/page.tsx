@@ -24,7 +24,7 @@ export default async function Home() {
   return (
     <main>
       {/* messge list*/}
-      <MessageList initialMessages={messages || []} />
+      <MessageList initialMessages={data || []} />
 
       {/* chat input */}
       <ChatInput />
