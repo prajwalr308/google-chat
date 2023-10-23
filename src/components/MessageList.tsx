@@ -36,9 +36,10 @@ const MessageList = () => {
       channel.unsubscribe();
     };
   }, [mutate, messages]);
+  if(!messages) return <div>loading...</div>;
   return (
     <div className="space-y-5 px-5 pt-8 pb-32 ">
-      {(messages || []).map((message) => (
+      {(messages).map((message) => (
         <div key={message.id}>
           <MessageComponent message={message} />
         </div>
