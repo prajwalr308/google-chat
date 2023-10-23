@@ -12,7 +12,7 @@ type Props = {
 const MessageList = () => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const queryClient = useQueryClient();
-  const { data: messages, error } = useQuery({
+  const { data: messages, refetch } = useQuery({
     queryKey: ["/api/getMessages"],
     queryFn: () => fetcher(),
   });
@@ -31,8 +31,10 @@ const MessageList = () => {
       if (messages?.find((m) => m.id === message.id)) return;
       if (!messages) {
         queryClient.invalidateQueries({queryKey:["/api/getMessages"]});
+        refetch();
       } else {
         queryClient.invalidateQueries({queryKey:["/api/getMessages"]});
+        refetch();
       }
     });
     return () => {

@@ -14,7 +14,7 @@ const ChatInput = () => {
   const { data: session } = useSession();
   const [message, setMessage] = React.useState("");
   const queryClient = useQueryClient();
-  const { data: messages, error } = useQuery({
+  const { data: messages, refetch } = useQuery({
     queryKey: ["/api/getMessages"],
     queryFn: () => fetcher(),
   });
@@ -42,6 +42,7 @@ const ChatInput = () => {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["/api/getMessages"] });
         queryClient.refetchQueries({ queryKey: ["/api/getMessages"] });
+        refetch();
       },
     });
 
