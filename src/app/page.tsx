@@ -9,7 +9,6 @@ import { fetcher } from "@/utils/fetchMessages";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import Provider from "@/components/Provider";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import Header from "@/components/Header";
 import { SessionProvider } from "next-auth/react";
 import { ReactQueryDevtools } from 'react-query/devtools'
