@@ -6,6 +6,7 @@ import { Message } from "../../typing";
 import useSWR from "swr";
 import { fetcher } from "@/utils/fetchMessages";
 import { useSession } from "next-auth/react";
+import { revalidateTag } from "next/cache";
 
 const ChatInput = () => {
   const { data: session } = useSession();
@@ -47,6 +48,7 @@ const ChatInput = () => {
       optimisticData: [...messages!, messageObj],
       rollbackOnError: true,
     });
+    revalidateTag("messages");
   };
 
   return (

@@ -3,7 +3,9 @@ export const getData = async (): Promise<any | null> => {
     process.env.NODE_ENV === "production"
       ? "https://google-chat-tan.vercel.app/api/getMessages"
       : "http://localhost:3000/api/getMessages";
-  const response = await fetch(apiUrl);
+  const response = await fetch(apiUrl, {
+    next: { tags: ["message"] },
+  });
   if (!response.ok) throw new Error("Error fetching data");
   const data = await response.json();
   return data || null;
