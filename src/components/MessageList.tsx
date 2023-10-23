@@ -10,6 +10,7 @@ type Props = {
 };
 const MessageList = ({ initialMessages }: Props) => {
   const { data: messages, error, mutate } = useSWR("/api/getMessages", fetcher);
+  console.log("🚀 ~ file: MessageList.tsx:37 ~ MessageList ~ data", messages);
   useEffect(() => {
     const channel = clientPusher.subscribe("messages");
     channel.bind("new-message", (message: Message) => {
@@ -17,10 +18,7 @@ const MessageList = ({ initialMessages }: Props) => {
       if (!messages) {
         mutate(fetcher);
       } else {
-        mutate(fetcher, {
-          optimisticData: [...messages!, message],
-          rollbackOnError: true,
-        });
+        mutate(fetcher, false);
       }
     });
     return () => {
