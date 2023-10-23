@@ -17,14 +17,12 @@ const MessageList = ({ initialMessages }: Props) => {
   console.log("🚀 ~ file: MessageList.tsx:37 ~ MessageList ~ data", messages);
 
   useEffect(() => {
-    mutate("/api/getMessages");
     if (messagesEndRef.current) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, initialMessages]);
   useEffect(() => {
     const channel = clientPusher.subscribe("messages");
-
     channel.bind("new-message", (message: Message) => {
       if (messages?.find((m) => m.id === message.id)) return;
       if (!messages) {
