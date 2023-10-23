@@ -10,10 +10,7 @@ type Props = {
 };
 const MessageList = ({ initialMessages }: Props) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const {
-    data: messages,
-    error,
-  } = useSWR("/api/getMessages", fetcher, {
+  const { data: messages, error } = useSWR("/api/getMessages", fetcher, {
     revalidateOnFocus: true,
     revalidateOnReconnect: true,
   });
@@ -29,9 +26,9 @@ const MessageList = ({ initialMessages }: Props) => {
     channel.bind("new-message", (message: Message) => {
       if (messages?.find((m) => m.id === message.id)) return;
       if (!messages) {
-        mutate('/api/getMessages', false);
+        mutate("/api/getMessages");
       } else {
-        mutate('/api/getMessages', false);
+        mutate("/api/getMessages");
       }
     });
     return () => {
