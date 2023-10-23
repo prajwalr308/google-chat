@@ -1,3 +1,4 @@
+import { revalidateTag } from "next/cache";
 import { serverPusher } from "../../../../pusher";
 import redis from "../../../../redis";
 import { Message } from "../../../../typing";
@@ -30,6 +31,7 @@ export async function POST(req: NextRequest) {
   serverPusher.trigger("messages", "new-message", newMessage).catch((e) => {
     console.log(e);
   });
+  revalidateTag("messages");
   return new NextResponse(JSON.stringify({ message: myData }), {
     status: 200,
   });

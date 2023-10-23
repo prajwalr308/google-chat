@@ -48,7 +48,7 @@ const ChatInput = () => {
       optimisticData: [...messages!, messageObj],
       rollbackOnError: true,
     });
-    revalidateTag("messages");
+    // revalidateTag("messages");
   };
 
   return (
