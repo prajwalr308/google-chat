@@ -45,7 +45,7 @@ const ChatInput = () => {
       mutate(fetcher);
       return [...messages!, data.message];
     };
-    uploadMessagetoUpstash();
+    await uploadMessagetoUpstash();
     // await mutate(uploadMessagetoUpstash, {
     //   optimisticData: [...messages!, messageObj],
     //   rollbackOnError: true,
