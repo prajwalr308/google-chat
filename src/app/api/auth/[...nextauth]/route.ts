@@ -1,8 +1,8 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth";
 import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 
-const authOptions:NextAuthOptions = {
+const authOptions = {
   // Configure one or more authentication providers
   providers: [
     // FacebookProvider({
