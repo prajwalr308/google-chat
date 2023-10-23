@@ -5,14 +5,17 @@ import useSWR, { mutate } from "swr";
 import MessageComponent from "./MessageComponent";
 import { clientPusher } from "../../pusher";
 import { Message } from "../../typing";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 type Props = {
   initialMessages: Message[];
 };
 const MessageList = () => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const queryClient = useQueryClient();
-  const { data: messages, error } = useQuery('/api/getMessages', fetcher);
+  const { data: messages, error } = useQuery({
+    queryKey: ["/api/getMessages"],
+    queryFn: () => fetcher(),
+  });
 
   console.log("🚀 ~ file: MessageList.tsx:37 ~ MessageList ~ data", messages);
 
@@ -23,13 +26,13 @@ const MessageList = () => {
   }, [messages]);
   useEffect(() => {
     const channel = clientPusher.subscribe("messages");
-    queryClient.invalidateQueries("/api/getMessages");
+    queryClient.invalidateQueries({queryKey:["/api/getMessages"]});
     channel.bind("new-message", (message: Message) => {
       if (messages?.find((m) => m.id === message.id)) return;
       if (!messages) {
-        queryClient.invalidateQueries("/api/getMessages");
+        queryClient.invalidateQueries({queryKey:["/api/getMessages"]});
       } else {
-        queryClient.invalidateQueries("/api/getMessages");
+        queryClient.invalidateQueries({queryKey:["/api/getMessages"]});
       }
     });
     return () => {
@@ -37,10 +40,10 @@ const MessageList = () => {
       channel.unsubscribe();
     };
   }, [mutate, messages]);
-  if(!messages) return <div>loading...</div>;
+  if (!messages) return <div>loading...</div>;
   return (
     <div className="space-y-5 px-5 pt-8 pb-32 ">
-      {(messages).map((message) => (
+      {messages.map((message) => (
         <div key={message.id}>
           <MessageComponent message={message} />
         </div>

@@ -6,16 +6,19 @@ import { Message } from "../../typing";
 import useSWR from "swr";
 import { getData } from "@/utils/fetchData";
 import { fetcher } from "@/utils/fetchMessages";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+
 import Provider from "@/components/Provider";
 import { getServerSession } from "next-auth";
 import Header from "@/components/Header";
 import { SessionProvider } from "next-auth/react";
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
+import React from "react";
 // import Loading from "@/components/loading";
 
 export default function Home() {
-  const queryClient = new QueryClient();
+  const [client] = React.useState(new QueryClient());
   //server side
   // const data= await getData();
   // const messages: Message[] = data.message || [];
@@ -25,16 +28,18 @@ export default function Home() {
 
   // if (!messages) return <Loading />;
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={client}>
       <SessionProvider>
-        <Header />
+      <ReactQueryStreamedHydration> <Header />
         <main>
           {/* messge list*/}
           <MessageList />
 
           {/* chat input */}
           <ChatInput />
-        </main>
+        </main></ReactQueryStreamedHydration>
+      <ReactQueryDevtools initialIsOpen={false} />
+       
         <ReactQueryDevtools initialIsOpen={false} />
       </SessionProvider>
     </QueryClientProvider>
