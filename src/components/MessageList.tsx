@@ -1,7 +1,7 @@
 "use client";
 import { fetcher } from "@/utils/fetchMessages";
 import React, { useEffect, useRef } from "react";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import MessageComponent from "./MessageComponent";
 import { clientPusher } from "../../pusher";
 import { Message } from "../../typing";
@@ -13,7 +13,6 @@ const MessageList = ({ initialMessages }: Props) => {
   const {
     data: messages,
     error,
-    mutate,
   } = useSWR("/api/getMessages", fetcher, {
     revalidateOnFocus: true,
     revalidateOnReconnect: true,
@@ -30,9 +29,9 @@ const MessageList = ({ initialMessages }: Props) => {
     channel.bind("new-message", (message: Message) => {
       if (messages?.find((m) => m.id === message.id)) return;
       if (!messages) {
-        mutate(fetcher);
+        mutate('/api/getMessages', false);
       } else {
-        mutate(fetcher, false);
+        mutate('/api/getMessages', false);
       }
     });
     return () => {
