@@ -42,9 +42,10 @@ const ChatInput = () => {
         "🚀 ~ file: ChatInput.tsx:33 ~ uploadMessagetoUpstah ~ data:",
         data
       );
+      mutate(fetcher);
       return [...messages!, data.message];
     };
-    mutate(uploadMessagetoUpstash, false);
+    uploadMessagetoUpstash();
     // await mutate(uploadMessagetoUpstash, {
     //   optimisticData: [...messages!, messageObj],
     //   rollbackOnError: true,
