@@ -23,6 +23,7 @@ const MessageList = () => {
   }, [messages]);
   useEffect(() => {
     const channel = clientPusher.subscribe("messages");
+    queryClient.invalidateQueries("/api/getMessages");
     channel.bind("new-message", (message: Message) => {
       if (messages?.find((m) => m.id === message.id)) return;
       if (!messages) {
