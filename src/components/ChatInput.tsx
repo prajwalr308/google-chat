@@ -48,7 +48,6 @@ const ChatInput = () => {
     
     await mutate(uploadMessagetoUpstash, {
       revalidate:true,
-      rollbackOnError: true,
     });
     // revalidateTag("messages");
   };
