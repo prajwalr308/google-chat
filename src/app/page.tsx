@@ -15,10 +15,7 @@ export default async function Home() {
   // console.log("messages in page tsx",messages);
 
   // client side
-  const { data, error } = useSWR("/api/getMessages", fetcher,{
-    revalidateOnFocus: true,
-    revalidateOnReconnect: true,
-  });
+  const { data, error } = useSWR("/api/getMessages", fetcher);
   console.log(data);
 
   const messages: Message[] = data || [];
